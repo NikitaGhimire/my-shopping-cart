@@ -4,7 +4,7 @@ import ProductCard from '../components/ProductCard';
 import Cart from '../components/Cart';
 import '../shop.css';
 
-const Shop = ({ cartItems, setCartItems }) => {
+const Shop = ({ cartItems, addToCart }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -22,25 +22,6 @@ const Shop = ({ cartItems, setCartItems }) => {
 
     fetchProducts();
   }, []);
-
-  const addToCart = (product, quantity) => {
-    setCartItems(prevItems => {
-      // Check if product already exists in cart
-      const existingItem = prevItems.find(item => item.id === product.id);
-      
-      if (existingItem) {
-        // If exists, update quantity
-        return prevItems.map(item =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + quantity }
-            : item
-        );
-      }
-      
-      // If doesn't exist, add new item
-      return [...prevItems, { ...product, quantity }];
-    });
-  };
 
   if (loading) {
     return (
